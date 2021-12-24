@@ -1,11 +1,12 @@
 /** 
-* \brief 
+* Form script Add-on to send datas to the server with our specific Joomla/RS Form Pro configuration.
+* This is an example, please consider updating Dom manipulation
 **/
 
 function sendMyForm(){
     event.preventDefault();
 
-    //Add span to print request status
+    // Add span to update request status
     if (document.getElementById("label-status-text") == null){
         document.querySelector("div.rsform-block-validation").insertAdjacentHTML('beforebegin', '<span id="label-status-text"></span>');
     }
@@ -14,8 +15,8 @@ function sendMyForm(){
     document.querySelector("#label-status-text").classList.remove("success");
     document.querySelector("#label-status-text").classList.remove("fail");
 
-    //AJAX Request
-	fetch('https://www.geppia.com/test/script.php', {
+    // AJAX Request
+	fetch('https://mysite.co/myscript.php', {
 		method: 'POST',
 		body: '',
 	}).then(function (response)
@@ -26,7 +27,7 @@ function sendMyForm(){
 		return Promise.reject(response);
 	}).then(function (data)
     {
-        // Response
+        // Server Response
         if (data['status'] == true){
             document.querySelector("#label-status-text").classList.add("success");
             document.querySelector("#label-status-text").classList.remove("fail");
@@ -38,6 +39,7 @@ function sendMyForm(){
         document.querySelector("#label-status-text").innerText = data['msg'];
 	}).catch(function (error) 
     {
+        // Bad UX practice
 		alert(error);
 	});
 
